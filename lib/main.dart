@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'widget1.dart';
-import 'widget2.dart';
+import 'circle.dart';
+import 'square.dart';
 
 void main() => runApp(MyApp());
+
+String title = 'Moyo';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Moyo',
+      title: title,
       home: MyHomePage(),
     );
   }
@@ -23,17 +25,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
   final List<String> _widgets = <String>[
-    'Widget1',
-    'Widget2',
+    'Circle',
+    'Square',
   ];
 
   Widget _buildBody() {
     switch (index) {
       case 0:
-        return Widget1();
+        return Circle();
         break;
       case 1:
-        return Widget2();
+        return Square();
         break;
       default:
         return Container();
@@ -43,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('test')),
+      appBar: AppBar(title: Text(title)),
       body: _buildBody(),
       drawer: Drawer(
         child: ListView(
