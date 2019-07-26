@@ -1,62 +1,71 @@
 import 'package:flutter/material.dart';
 
+import 'widget1.dart';
+import 'widget2.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final String appTitle = 'Drawer Demo';
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: appTitle,
-      home: MyHomePage(title: appTitle),
+      title: 'Moyo',
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
-  final String title;
+class _MyHomePageState extends State<MyHomePage> {
+  int index = 0;
+  final List<String> _widgets = <String>[
+    'Widget1',
+    'Widget2',
+  ];
+
+  Widget _buildBody() {
+    switch (index) {
+      case 0:
+        return Widget1();
+        break;
+      case 1:
+        return Widget2();
+        break;
+      default:
+        return Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(child: const Text('My Page!')),
+      appBar: AppBar(title: const Text('test')),
+      body: _buildBody(),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: const Text('Drawer Header'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
+          children: _widgets
+              .asMap()
+              .map((int i, String widget) {
+                return MapEntry<int, ListTile>(
+                  i,
+                  ListTile(
+                    title: Text(widget),
+                    onTap: () {
+                      setState(() {
+                        index = i;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
+              })
+              .values
+              .toList(),
         ),
       ),
     );
