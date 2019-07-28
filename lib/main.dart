@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'circle.dart';
-import 'square.dart';
+import 'circle_widget.dart';
+import 'path_widget.dart';
+import 'square_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,15 +28,19 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<String> _widgets = <String>[
     'Circle',
     'Square',
+    'Path',
   ];
 
   Widget _buildBody() {
     switch (index) {
       case 0:
-        return Circle();
+        return CircleWidget();
         break;
       case 1:
-        return Square();
+        return SquareWidget();
+        break;
+      case 2:
+        return PathWidget();
         break;
       default:
         return Container();
