@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'circle_widget.dart';
 import 'path_widget.dart';
+import 'shippo_widget.dart';
 import 'square_widget.dart';
 
 void main() => runApp(MyApp());
@@ -29,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'Circle',
     'Square',
     'Path',
+    'Shippo Tunagi',
   ];
 
   Widget _buildBody() {
@@ -42,6 +44,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 2:
         return PathWidget();
         break;
+      case 3:
+        return ShippoWidget();
+        break;
       default:
         return Container();
     }
@@ -50,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text('Moyo - ${_widgets[index]}')),
       body: _buildBody(),
       drawer: Drawer(
         child: ListView(
