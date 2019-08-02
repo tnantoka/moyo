@@ -1,5 +1,4 @@
 import 'package:flutter_web/material.dart';
-
 import 'package:vector_math/vector_math.dart' hide Colors;
 
 class ShippoWidget extends StatelessWidget {
