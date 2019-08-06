@@ -2,6 +2,7 @@ import 'package:flutter_web/material.dart';
 
 import 'circle_spiral_widget.dart';
 import 'circle_widget.dart';
+import 'fuyofuyo_widget.dart';
 import 'path_widget.dart';
 import 'shippo_widget.dart';
 import 'square_widget.dart';
@@ -34,25 +35,23 @@ class _MyHomePageState extends State<MyHomePage> {
     'Path',
     'Shippo Tunagi',
     'Circle Spiral',
+    'Fuyo Fuyo',
   ];
 
   Widget _buildBody() {
     switch (index) {
       case 0:
         return CircleWidget();
-        break;
       case 1:
         return SquareWidget();
-        break;
       case 2:
         return PathWidget();
-        break;
       case 3:
         return ShippoWidget();
-        break;
       case 4:
         return CircleSpiralWidget();
-        break;
+      case 5:
+        return FuyoFuyoWidget();
       default:
         return Container();
     }
