@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'circle_spiral_widget.dart';
 import 'circle_widget.dart';
 import 'fuyofuyo_widget.dart';
+import 'grid_widget.dart';
 import 'path_widget.dart';
 import 'shippo_widget.dart';
 import 'square_widget.dart';
@@ -36,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'Shippo Tunagi',
     'Circle Spiral',
     'Fuyo Fuyo',
+    'Grid',
   ];
 
   Widget _buildBody() {
@@ -52,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return CircleSpiralWidget();
       case 5:
         return FuyoFuyoWidget();
+      case 6:
+        return GridWidget();
       default:
         return Container();
     }
