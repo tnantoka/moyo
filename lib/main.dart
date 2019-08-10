@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'circle_spiral_widget.dart';
 import 'circle_widget.dart';
 import 'fuyofuyo_widget.dart';
 import 'grid_widget.dart';
+import 'maze_widget.dart';
 import 'path_widget.dart';
 import 'shippo_widget.dart';
 import 'square_widget.dart';
@@ -29,8 +32,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int index = 0;
+  int _index = 1;
+  bool _refreshing = false;
   final List<String> _widgets = <String>[
+    'Blank',
     'Circle',
     'Square',
     'Path',
@@ -38,24 +43,31 @@ class _MyHomePageState extends State<MyHomePage> {
     'Circle Spiral',
     'Fuyo Fuyo',
     'Grid',
+    'Maze',
   ];
+  final Random _random = Random();
 
   Widget _buildBody() {
-    switch (index) {
-      case 0:
-        return CircleWidget();
+    if (_refreshing) {
+      return Center(child: const CircularProgressIndicator());
+    }
+    switch (_index) {
       case 1:
-        return SquareWidget();
+        return CircleWidget();
       case 2:
-        return PathWidget();
+        return SquareWidget();
       case 3:
-        return ShippoWidget();
+        return PathWidget();
       case 4:
-        return CircleSpiralWidget();
+        return ShippoWidget();
       case 5:
-        return FuyoFuyoWidget();
+        return CircleSpiralWidget();
       case 6:
+        return FuyoFuyoWidget();
+      case 7:
         return GridWidget();
+      case 8:
+        return MazeWidget();
       default:
         return Container();
     }
@@ -64,7 +76,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Moyo - ${_widgets[index]}')),
+      appBar: AppBar(
+        title: Text('Moyo - ${_widgets[_index]}'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () {
+              setState(() {
+                _refreshing = true;
+              });
+              Future<void>.delayed(const Duration(milliseconds: 500), () {
+                setState(() {
+                  _refreshing = false;
+                });
+              });
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.shuffle),
+            tooltip: 'Shuffle',
+            onPressed: () {
+              setState(() {
+                _index = _random.nextInt(_widgets.length);
+              });
+            },
+          ),
+        ],
+      ),
       body: _buildBody(),
       drawer: Drawer(
         child: ListView(
@@ -78,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: Text(widget),
                     onTap: () {
                       setState(() {
-                        index = i;
+                        _index = i;
                       });
                       Navigator.pop(context);
                     },

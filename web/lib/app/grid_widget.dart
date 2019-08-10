@@ -39,7 +39,7 @@ class _MyPainter extends CustomPainter {
       ..strokeWidth = 1;
     canvas.drawRect(Rect.fromLTRB(0, 0, width, height), stroke);
 
-    final double length = 30;
+    const double length = 30;
     for (double x = 0; x < width; x += length) {
       for (double y = 0; y < height; y += length) {
         canvas.drawRect(
