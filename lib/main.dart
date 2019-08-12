@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'circle_spiral_widget.dart';
 import 'circle_widget.dart';
+import 'dungeon_widget.dart';
 import 'fuyofuyo_widget.dart';
 import 'grid_widget.dart';
 import 'maze_widget.dart';
@@ -44,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'Fuyo Fuyo',
     'Grid',
     'Maze',
+    'Dungeon',
   ];
   final Random _random = Random();
 
@@ -68,6 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return GridWidget();
       case 8:
         return MazeWidget();
+      case 9:
+        return DungeonWidget();
       default:
         return Container();
     }
