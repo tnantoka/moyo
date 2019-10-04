@@ -56,7 +56,7 @@ class _MyPainter extends CustomPainter {
     final int dungeonCountY = mazeCountY * 3;
 
     if (_dungeon.isEmpty) {
-      List<int> maze = buildMaze(mazeCountX, mazeCountY);
+      final List<int> maze = buildMaze(mazeCountX, mazeCountY);
       _dungeon = _buildDungeon(
           maze, mazeCountX, mazeCountY, dungeonCountX, dungeonCountY);
     }

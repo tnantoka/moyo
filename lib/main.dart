@@ -11,6 +11,7 @@ import 'maze_widget.dart';
 import 'path_widget.dart';
 import 'shippo_widget.dart';
 import 'square_widget.dart';
+import 'turtle_graphics_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'Grid',
     'Maze',
     'Dungeon',
+    'Turtle Graphics',
   ];
   final Random _random = Random();
 
@@ -72,6 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return MazeWidget();
       case 9:
         return DungeonWidget();
+      case 10:
+        return TurtleGraphicsWidget();
       default:
         return Container();
     }
