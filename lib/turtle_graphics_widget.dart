@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+//import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
@@ -14,7 +14,7 @@ class _TurtleGraphicsWidgetState extends State<TurtleGraphicsWidget>
   int _commandIndex = 0;
   Timer _timer;
   List<Command> _commands;
-  final Random _rand = Random();
+//  final Random _rand = Random();
 
   @override
   void initState() {

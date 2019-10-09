@@ -2,16 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'circle_spiral_widget.dart';
-import 'circle_widget.dart';
-import 'dungeon_widget.dart';
-import 'fuyofuyo_widget.dart';
-import 'grid_widget.dart';
-import 'maze_widget.dart';
-import 'path_widget.dart';
-import 'shippo_widget.dart';
-import 'square_widget.dart';
-import 'turtle_graphics_widget.dart';
+import 'painter_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +15,12 @@ class MyApp extends StatelessWidget {
       title: title,
       home: MyHomePage(),
       theme: ThemeData(primaryColor: Colors.white),
+      routes: PainterScreen.widgets.map(
+        (String path, String name) => MapEntry<String, WidgetBuilder>(
+          '/$path',
+          (BuildContext context) => PainterScreen(path: path),
+        ),
+      ),
     );
   }
 }
@@ -34,107 +31,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _index = 1;
-  bool _refreshing = false;
-  final List<String> _widgets = <String>[
-    'Blank',
-    'Circle',
-    'Square',
-    'Path',
-    'Shippo Tunagi',
-    'Circle Spiral',
-    'Fuyo Fuyo',
-    'Grid',
-    'Maze',
-    'Dungeon',
-    'Turtle Graphics',
-  ];
   final Random _random = Random();
-
-  Widget _buildBody() {
-    if (_refreshing) {
-      return Center(child: const CircularProgressIndicator());
-    }
-    switch (_index) {
-      case 1:
-        return CircleWidget();
-      case 2:
-        return SquareWidget();
-      case 3:
-        return PathWidget();
-      case 4:
-        return ShippoWidget();
-      case 5:
-        return CircleSpiralWidget();
-      case 6:
-        return FuyoFuyoWidget();
-      case 7:
-        return GridWidget();
-      case 8:
-        return MazeWidget();
-      case 9:
-        return DungeonWidget();
-      case 10:
-        return TurtleGraphicsWidget();
-      default:
-        return Container();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Moyo - ${_widgets[_index]}'),
+        title: const Text('Moyo'),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
-            onPressed: () {
-              setState(() {
-                _refreshing = true;
-              });
-              Future<void>.delayed(const Duration(milliseconds: 500), () {
-                setState(() {
-                  _refreshing = false;
-                });
-              });
-            },
-          ),
           IconButton(
             icon: const Icon(Icons.shuffle),
             tooltip: 'Shuffle',
             onPressed: () {
               setState(() {
-                _index = _random.nextInt(_widgets.length);
+                final int index = _random.nextInt(PainterScreen.widgets.length);
+                Navigator.pushNamed(
+                  context,
+                  '/${PainterScreen.widgets.keys.toList()[index]}',
+                );
               });
             },
           ),
         ],
       ),
-      body: _buildBody(),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: _widgets
-              .asMap()
-              .map((int i, String widget) {
-                return MapEntry<int, ListTile>(
-                  i,
-                  ListTile(
-                    title: Text(widget),
-                    onTap: () {
-                      setState(() {
-                        _index = i;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                );
-              })
-              .values
-              .toList(),
-        ),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children:
+            PainterScreen.widgets.entries.map((MapEntry<String, String> entry) {
+          return ListTile(
+            title: Text(entry.value),
+            onTap: () {
+              Navigator.pushNamed(context, '/${entry.key}');
+            },
+          );
+        }).toList(),
       ),
     );
   }
