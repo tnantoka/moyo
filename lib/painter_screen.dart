@@ -81,6 +81,38 @@ class _PainterScreenState extends State<PainterScreen> {
     }
   }
 
+  Future<void> _copyToClipboard() async {
+    final RenderRepaintBoundary boundary =
+        globalKey.currentContext.findRenderObject();
+    final ui.Image image = await boundary.toImage();
+    final ByteData byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData.buffer.asUint8List();
+    final String base64 = base64Encode(pngBytes);
+
+    final ClipboardData data =
+        ClipboardData(text: 'data:image/png;base64,$base64');
+    await Clipboard.setData(data);
+
+    showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Copied'),
+          content: const Text('It was saved to clipboard as dataURI.'),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,38 +136,7 @@ class _PainterScreenState extends State<PainterScreen> {
           IconButton(
             icon: const Icon(Icons.save_alt),
             tooltip: 'Save',
-            onPressed: () async {
-              final RenderRepaintBoundary boundary =
-                  globalKey.currentContext.findRenderObject();
-              final ui.Image image = await boundary.toImage();
-              final ByteData byteData =
-                  await image.toByteData(format: ui.ImageByteFormat.png);
-              final Uint8List pngBytes = byteData.buffer.asUint8List();
-              final String base64 = base64Encode(pngBytes);
-
-              final ClipboardData data =
-                  ClipboardData(text: 'data:image/png;base64,$base64');
-              await Clipboard.setData(data);
-
-              showDialog<AlertDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Copied'),
-                    content:
-                        const Text('It was saved to clipboard as dataURI.'),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: const Text('OK'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      )
-                    ],
-                  );
-                },
-              );
-            },
+            onPressed: _copyToClipboard,
           ),
         ],
       ),
