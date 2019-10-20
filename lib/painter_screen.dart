@@ -14,6 +14,7 @@ import 'maze_widget.dart';
 import 'path_widget.dart';
 import 'shippo_widget.dart';
 import 'square_widget.dart';
+import 'triangle_puzzle_widget.dart';
 import 'turtle_graphics_widget.dart';
 
 class PainterScreen extends StatefulWidget {
@@ -34,6 +35,7 @@ class PainterScreen extends StatefulWidget {
       'Maze',
       'Dungeon',
       'Turtle Graphics',
+      'Triangle Puzzle'
     ].map(
       (String name) => MapEntry<String, String>(
         name.replaceAll(' ', '').toLowerCase(),
@@ -76,6 +78,8 @@ class _PainterScreenState extends State<PainterScreen> {
         return DungeonWidget();
       case 10:
         return TurtleGraphicsWidget();
+      case 11:
+        return TrianglePuzzleWidget();
       default:
         return Container();
     }
