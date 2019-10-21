@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import 'circle_spiral_widget.dart';
 import 'circle_widget.dart';
+import 'color_trick_widget.dart';
 import 'dungeon_widget.dart';
 import 'fuyofuyo_widget.dart';
 import 'grid_widget.dart';
@@ -35,7 +36,8 @@ class PainterScreen extends StatefulWidget {
       'Maze',
       'Dungeon',
       'Turtle Graphics',
-      'Triangle Puzzle'
+      'Triangle Puzzle',
+      'Color Trick'
     ].map(
       (String name) => MapEntry<String, String>(
         name.replaceAll(' ', '').toLowerCase(),
@@ -80,6 +82,8 @@ class _PainterScreenState extends State<PainterScreen> {
         return TurtleGraphicsWidget();
       case 11:
         return TrianglePuzzleWidget();
+      case 12:
+        return ColorTrickWidget();
       default:
         return Container();
     }
